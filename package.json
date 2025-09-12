@@ -1,5 +1,5 @@
 {
-  "name": "canvas-map",
+  "name": "klik-nusantara",
   "version": "1.0.0",
   "description": "",
   "scripts": {
@@ -7,7 +7,7 @@
     "build": "parcel build index.html"
   },
   "keywords": [],
-  "author": "",
+  "author": "Akmal, Alief, Gideon",
   "license": "ISC",
   "devDependencies": {
     "parcel": "^2.15.4"
