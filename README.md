@@ -27,3 +27,15 @@ bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+### Clear cache (recommended after making significant changes)
+
+```bash
+npm run clear-cache
+# or
+yarn clear-cache
+# or
+pnpm clear-cache
+# or
+bun clear-cache
+```
