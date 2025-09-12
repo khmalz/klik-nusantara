@@ -1,104 +1,50 @@
 import * as turf from "@turf/turf";
-import geojson from "./assets/indonesia.json";
+import indoJson from "./assets/indonesia-province-simple.json";
 
-// Jawa
-const jawaStates = ["Yogyakarta", "Jawa Timur", "Jawa Barat", "Jawa Tengah", "Banten", "Jakarta Raya"];
-const jawaProvinces = geojson.features.filter(f => jawaStates.includes(f.properties.state));
-const fc = turf.featureCollection(jawaProvinces);
-const jawaCombined = turf.combine(fc);
-if (jawaCombined.features && jawaCombined.features.length) {
-   jawaCombined.features.forEach(f => {
-      f.properties = f.properties || {};
-      f.properties._name = "Pulau Jawa";
-   });
+/**
+ * Helper function to filter, combine, and name features in a GeoJSON based on a list of province names.
+ * @param {object} geojson - The source GeoJSON
+ * @param {string[]} provinceNames - An array of province names
+ * @param {string} islandName - The name of the new feature collection
+ * @returns {object} The new feature collection.
+ */
+function createIslandFeature(geojson, provinceNames, islandName) {
+   const provinces = geojson.features.filter(f => provinceNames.includes(f.properties.Propinsi));
+
+   if (provinces.length === 0) {
+      return null;
+   }
+
+   const featureCollection = turf.featureCollection(provinces);
+   const combined = turf.combine(featureCollection);
+
+   if (combined.features && combined.features.length) {
+      combined.features.forEach(f => {
+         f.properties = f.properties || {};
+         f.properties._name = islandName;
+      });
+   }
+   return combined;
 }
 
-// Sumatera
-const sumateraStates = ["Aceh", "Sumatera Utara", "Sumatera Barat", "Riau", "Jambi", "Sumatera Selatan", "Bengkulu", "Lampung", "Kepulauan Riau", "Bangka-Belitung"];
-const sumateraProvinces = geojson.features.filter(f => sumateraStates.includes(f.properties.state));
-const fcSumatera = turf.featureCollection(sumateraProvinces);
-const sumateraCombined = turf.combine(fcSumatera);
+const jawaStates = ["DAERAH ISTIMEWA YOGYAKARTA", "JAWA TENGAH", "PROBANTEN", "JAWA TIMUR", "DKI JAKARTA", "JAWA BARAT"];
+const sumateraStates = ["SUMATERA UTARA", "BANGKA BELITUNG", "SUMATERA BARAT", "SUMATERA SELATAN", "JAMBI", "LAMPUNG", "BENGKULU", "DI. ACEH", "RIAU"];
+const kalimantanStates = ["KALIMANTAN SELATAN", "KALIMANTAN BARAT", "KALIMANTAN TIMUR", "KALIMANTAN TENGAH"];
+const sulawesiStates = ["GORONTALO", "SULAWESI TENGGARA", "SULAWESI SELATAN", "SULAWESI TENGAH", "SULAWESI UTARA"];
+const nusaTenggaraStates = ["NUSATENGGARA BARAT", "NUSA TENGGARA TIMUR", "BALI"];
+const malukuStates = ["MALUKU UTARA", "MALUKU"];
+const papuaStates = ["IRIAN JAYA TIMUR", "IRIAN JAYA TENGAH", "IRIAN JAYA BARAT"];
 
-if (sumateraCombined.features && sumateraCombined.features.length) {
-   sumateraCombined.features.forEach(f => {
-      f.properties = f.properties || {};
-      f.properties._name = "Pulau Sumatra";
-   });
-}
+const jawaCombined = createIslandFeature(indoJson, jawaStates, "Pulau Jawa");
+const sumateraCombined = createIslandFeature(indoJson, sumateraStates, "Pulau Sumatra");
+const kalimantanCombined = createIslandFeature(indoJson, kalimantanStates, "Pulau Kalimantan");
+const sulawesiCombined = createIslandFeature(indoJson, sulawesiStates, "Pulau Sulawesi");
+const nusaTenggaraCombined = createIslandFeature(indoJson, nusaTenggaraStates, "Kepulauan Nusa Tenggara");
+const malukuCombined = createIslandFeature(indoJson, malukuStates, "Kepulauan Maluku");
+const papuaCombined = createIslandFeature(indoJson, papuaStates, "Pulau Papua");
 
-// Kalimantan
-const kalimantanStates = ["Kalimantan Barat", "Kalimantan Tengah", "Kalimantan Selatan", "Kalimantan Timur", "Kalimantan Utara"];
-const kalimantanProvinces = geojson.features.filter(f => kalimantanStates.includes(f.properties.state));
-const fcKalimantan = turf.featureCollection(kalimantanProvinces);
-const kalimantanCombined = turf.combine(fcKalimantan);
+const allIslandFeatures = [jawaCombined, sumateraCombined, kalimantanCombined, sulawesiCombined, nusaTenggaraCombined, malukuCombined, papuaCombined].filter(Boolean).flatMap(island => island.features);
 
-if (kalimantanCombined.features && kalimantanCombined.features.length) {
-   kalimantanCombined.features.forEach(f => {
-      f.properties = f.properties || {};
-      f.properties._name = "Pulau Kalimantan";
-   });
-}
-
-// Sulawesi
-const sulawesiStates = ["Sulawesi Utara", "Gorontalo", "Sulawesi Tengah", "Sulawesi Barat", "Sulawesi Selatan", "Sulawesi Tenggara"];
-const sulawesiProvinces = geojson.features.filter(f => sulawesiStates.includes(f.properties.state));
-const fcSulawesi = turf.featureCollection(sulawesiProvinces);
-const sulawesiCombined = turf.combine(fcSulawesi);
-
-if (sulawesiCombined.features && sulawesiCombined.features.length) {
-   sulawesiCombined.features.forEach(f => {
-      f.properties = f.properties || {};
-      f.properties._name = "Pulau Sulawesi";
-   });
-}
-
-// Nusa Tenggara
-const nusaTenggaraStates = ["Bali", "Nusa Tenggara Barat", "Nusa Tenggara Timur"];
-const nusaTenggaraProvinces = geojson.features.filter(f => nusaTenggaraStates.includes(f.properties.state));
-const fcNusaTenggara = turf.featureCollection(nusaTenggaraProvinces);
-const nusaTenggaraCombined = turf.combine(fcNusaTenggara);
-
-if (nusaTenggaraCombined.features && nusaTenggaraCombined.features.length) {
-   nusaTenggaraCombined.features.forEach(f => {
-      f.properties = f.properties || {};
-      f.properties._name = "Kepulauan Nusa Tenggara";
-   });
-}
-
-// Maluku
-const malukuStates = ["Maluku", "Maluku Utara"];
-const malukuProvinces = geojson.features.filter(f => malukuStates.includes(f.properties.state));
-const fcMaluku = turf.featureCollection(malukuProvinces);
-const malukuCombined = turf.combine(fcMaluku);
-
-if (malukuCombined.features && malukuCombined.features.length) {
-   malukuCombined.features.forEach(f => {
-      f.properties = f.properties || {};
-      f.properties._name = "Kepulauan Maluku";
-   });
-}
-
-// Papua
-const papuaStates = ["Papua", "Papua Barat"];
-const papuaProvinces = geojson.features.filter(f => papuaStates.includes(f.properties.state));
-const fcPapua = turf.featureCollection(papuaProvinces);
-const papuaCombined = turf.combine(fcPapua);
-
-if (papuaCombined.features && papuaCombined.features.length) {
-   papuaCombined.features.forEach(f => {
-      f.properties = f.properties || {};
-      f.properties._name = "Pulau Papua";
-   });
-}
-
-const allIslands = turf.featureCollection([
-   ...sumateraCombined.features,
-   ...kalimantanCombined.features,
-   ...sulawesiCombined.features,
-   ...nusaTenggaraCombined.features,
-   ...malukuCombined.features,
-   ...papuaCombined.features,
-   ...jawaCombined.features,
-]);
+const allIslands = turf.featureCollection(allIslandFeatures);
 
 module.exports = allIslands;

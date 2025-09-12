@@ -1,4 +1,4 @@
-import geojson from "./assets/indonesia.json";
+import geojson from "./assets/indonesia-province-simple.json";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import allIslands from "./islandBounds";
