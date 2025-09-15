@@ -11,6 +11,8 @@
   "author": "Akmal, Alief, Gideon",
   "license": "ISC",
   "devDependencies": {
+    "@parcel/config-default": "^2.15.4",
+    "@parcel/transformer-raw": "^2.15.4",
     "parcel": "^2.15.4",
     "rimraf": "^6.0.1"
   },

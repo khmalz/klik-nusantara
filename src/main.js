@@ -23,7 +23,8 @@ const paddedBounds = [
 const map = L.map("map", {
    maxBounds: paddedBounds,
    maxBoundsViscosity: 0.6,
-   minZoom: 4,
+   minZoom: 4.45,
+   maxZoom: 5.5,
 }).fitBounds(rawBounds);
 
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {

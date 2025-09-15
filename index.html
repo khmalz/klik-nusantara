@@ -5,10 +5,11 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <title>Klik Nusantara</title>
       <link rel="stylesheet" href="./src/style.css" />
+      <link rel="stylesheet" href="./src/style2.css" />
    </head>
    <body>
       <h1 class="title">Klik Nusantara</h1>
-      
+
       <div class="content">
          <div id="map">
             <button id="prevIsland" class="map-btn prev">&#x25c0;</button>
@@ -17,6 +18,37 @@
          </div>
       </div>
 
+      <div class="content2">
+         <div id="map2"></div>
+      </div>
+
+      <div id="islandPopup" class="popup-overlay hidden">
+         <div class="popup-content">
+            <div class="popup-left">
+               <div class="image-wrapper">
+                  <button id="prevPopupIsland" class="nav-btn prev-btn">◀</button>
+                  <img id="islandImage" alt="Island" class="hidden" />
+                  <button id="nextPopupIsland" class="nav-btn next-btn">▶</button>
+               </div>
+
+               <button id="closePopup" class="back-btn">⬅ Back</button>
+            </div>
+
+            <div class="popup-right">
+               <h2 id="islandTitle"></h2>
+               <p id="islandFact">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro, non assumenda libero vitae fugit sint molestiae, sequi ex saepe dolores dolor cupiditate amet quidem animi nihil sed distinctio dignissimos velit ut accusamus, earum
+                  ab? Pariatur excepturi commodi, sit tempore natus perferendis id fuga quas officiis, quo quidem, placeat eum rerum?
+               </p>
+               <p id="islandFact">
+                  Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolorem accusamus exercitationem, corporis eveniet officiis esse quia quo alias veritatis deleniti ipsam saepe quibusdam quasi assumenda voluptates iure magnam at, quos vel
+                  provident odio dolor. Qui?
+               </p>
+            </div>
+         </div>
+      </div>
+
       <script type="module" src="./src/main.js"></script>
+      <script type="module" src="./src/main2.js"></script>
    </body>
 </html>
